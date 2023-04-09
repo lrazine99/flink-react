@@ -20,7 +20,7 @@ const ModalLocation = ({ show, handleClose, setHub }) => {
       setIsLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:3001/location/result?q=${query}`
+        `${process.env.REACT_APP_BACK_ENDPOINT}/location/result?q=${query}`
       );
       setOptions(
         [...data.message.slice(0, 3)].map((element) => {
@@ -42,7 +42,7 @@ const ModalLocation = ({ show, handleClose, setHub }) => {
     try {
       if (event?.id?.latitude && event?.id?.longitude) {
         const { data } = await axios.get(
-          `http://localhost:3001/location/hub?latitude=${event?.id?.latitude}&longitude=${event?.id?.longitude}`
+          `${process.env.REACT_APP_BACK_ENDPOINT}/location/hub?latitude=${event?.id?.latitude}&longitude=${event?.id?.longitude}`
         );
 
         if (!data.message.time) {

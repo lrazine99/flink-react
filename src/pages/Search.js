@@ -17,12 +17,14 @@ const Search = ({ setCounter, counters, hub, setHub }) => {
       try {
         const {
           data: { message },
-        } = await axios.get(`http://localhost:3001/categories`);
+        } = await axios.get(
+          `${process.env.REACT_APP_BACK_ENDPOINT}/categories`
+        );
 
         setCategories(message.sort((a, b) => a.rank - b.rank));
 
         const { data } = await axios.get(
-          `http://localhost:3001/products/search?q=${search}`
+          `${process.env.REACT_APP_BACK_ENDPOINT}/products/search?q=${search}`
         );
 
         product.current = data.message;
@@ -36,7 +38,7 @@ const Search = ({ setCounter, counters, hub, setHub }) => {
     fetchData();
     // eslint-disable-next-line
   }, []);
-  
+
   return isLoading ? (
     <Loader></Loader>
   ) : (

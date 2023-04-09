@@ -26,9 +26,12 @@ const Header = ({ counters, setCounter, setHub }) => {
         try {
           const {
             data: { message },
-          } = await axios.post(`http://localhost:3001/products`, {
-            product_skus: totalProductCart,
-          });
+          } = await axios.post(
+            `${process.env.REACT_APP_BACK_ENDPOINT}/products`,
+            {
+              product_skus: totalProductCart,
+            }
+          );
 
           setBasket(message);
         } catch (error) {
@@ -56,7 +59,7 @@ const Header = ({ counters, setCounter, setHub }) => {
       setIsLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:3001/products/search?q=${query}`
+        `${process.env.REACT_APP_BACK_ENDPOINT}/products/search?q=${query}`
       );
 
       setOptions(() => {

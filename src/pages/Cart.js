@@ -23,11 +23,14 @@ const Cart = ({ setCounter, counter }) => {
         try {
           const {
             data: { message },
-          } = await axios.post(`http://localhost:3001/products`, {
-            product_skus: Object.keys(counter).filter(
-              (element) => element !== "total"
-            ),
-          });
+          } = await axios.post(
+            `${process.env.REACT_APP_BACK_ENDPOINT}/products`,
+            {
+              product_skus: Object.keys(counter).filter(
+                (element) => element !== "total"
+              ),
+            }
+          );
 
           setBasket(message);
           setIsLoading(false);

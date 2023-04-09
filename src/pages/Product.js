@@ -24,7 +24,9 @@ const Product = ({ counters, setCounter, setHub }) => {
       try {
         const {
           data: { message },
-        } = await axios.get(`http://localhost:3001/product/${productSku}`);
+        } = await axios.get(
+          `${process.env.REACT_APP_BACK_ENDPOINT}/product/${productSku}`
+        );
 
         setProduct(message);
       } catch (error) {

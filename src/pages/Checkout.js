@@ -9,7 +9,7 @@ import CheckoutForm from "../components/CheckoutForm";
 
 const Checkout = ({ counter }) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
-  console.log(process.env.REACT_APP_STRIPE_KEY)
+  console.log(process.env.REACT_APP_STRIPE_KEY);
   const today = new Date();
   const day = today.toLocaleDateString("en-GB", { day: "2-digit" });
   const month = today.toLocaleDateString("en-GB", { month: "2-digit" });
@@ -25,7 +25,7 @@ const Checkout = ({ counter }) => {
   let numTotal = Object.keys(counter).length - 1;
 
   numTotal = numTotal === -1 ? 0 : numTotal;
-  
+
   useEffect(() => {
     if (numTotal) {
       setIsLoading(true);
@@ -34,11 +34,14 @@ const Checkout = ({ counter }) => {
         try {
           const {
             data: { message },
-          } = await axios.post(`http://localhost:3001/products`, {
-            product_skus: Object.keys(counter).filter(
-              (element) => element !== "total"
-            ),
-          });
+          } = await axios.post(
+            `${process.env.REACT_APP_BACK_ENDPOINT}/products`,
+            {
+              product_skus: Object.keys(counter).filter(
+                (element) => element !== "total"
+              ),
+            }
+          );
 
           setOrder(message);
           setIsLoading(false);
