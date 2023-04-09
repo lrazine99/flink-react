@@ -2,14 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { errorToast, formatNumberEur } from "../components/Utils";
-import Form from "react-bootstrap/Form";
 import Loader from "../components/Loader";
-import Cookies from "js-cookie";
-import Button from "react-bootstrap/Button";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
-import { toast } from "react-toastify";
 
 const Checkout = ({ counter }) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
@@ -19,13 +15,16 @@ const Checkout = ({ counter }) => {
   const year = today.getFullYear();
   const currentDate = `${day}/${month}/${year}`;
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line
   const [order, setOrder] = useState([]);
+  // eslint-disable-next-line
   const [paymentState, setPaymentState] = useState(false);
 
   const navigate = useNavigate();
   let numTotal = Object.keys(counter).length - 1;
 
   numTotal = numTotal === -1 ? 0 : numTotal;
+  
   useEffect(() => {
     if (numTotal) {
       setIsLoading(true);
@@ -51,6 +50,7 @@ const Checkout = ({ counter }) => {
 
       fetchProducts();
     }
+    // eslint-disable-next-line
   }, []);
 
   return isLoading ? (
@@ -76,7 +76,6 @@ const Checkout = ({ counter }) => {
                 counter={counter}
                 currentDate={currentDate}
               />
-              
             </Elements>
           </div>
 
