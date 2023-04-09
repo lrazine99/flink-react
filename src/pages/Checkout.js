@@ -9,6 +9,7 @@ import CheckoutForm from "../components/CheckoutForm";
 
 const Checkout = ({ counter }) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+  console.log(process.env.REACT_APP_STRIPE_KEY)
   const today = new Date();
   const day = today.toLocaleDateString("en-GB", { day: "2-digit" });
   const month = today.toLocaleDateString("en-GB", { month: "2-digit" });
