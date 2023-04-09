@@ -8,7 +8,7 @@ import { errorToast } from "./Utils";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const CheckoutForm = ({ setPaymentState, currentDate, counter }) => {
+const CheckoutForm = ({ currentDate, counter }) => {
   const stripe = useStripe();
   const navigate = useNavigate();
   const elements = useElements();
@@ -44,22 +44,25 @@ const CheckoutForm = ({ setPaymentState, currentDate, counter }) => {
     const stripeToken = stripeResponse.token.id;
 
     try {
-      const response = await axios.post("http://localhost:3001/pay", {
-        stripeToken,
-      });
-
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACK_ENDPOINT}/pay`,
+        {
+          stripeToken,
+        }
+      );
+      
       if (response.data.status === "succeeded") {
-        await axios.post("http://localhost:3001/checkout", {
+        const d = await axios.post(`${process.env.REACT_APP_BACK_ENDPOINT}/checkout`, {
           formData,
         });
+        console.log(d)
 
-        setPaymentState(true);
-        toast.success(
-          "paiment reussi votre commande est prise en compte"
-        );
-        navigate('/products')
+        toast.success("paiment reussi votre commande est prise en compte");
+        Cookies.remove("basket");
+        navigate("/products");
       }
     } catch (error) {
+      console.log(error)
       errorToast(
         "une erreur est survenue, veuillez verifier vos informations et réessayer"
       );

@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import BackOffice from "./pages/BackOffice";
 import Product from "./pages/Product";
 import Products from "./pages/Products";
 import Cart from "./pages/Cart";
@@ -22,6 +23,9 @@ function App() {
     Cookies.get("validLocation") ? JSON.parse(Cookies.get("validLocation")) : {}
   );
 
+  // eslint-disable-next-line
+  const [logedAdmin, setLogedAdmin] = useState(Cookies.get("logedAdmin"));
+
   return (
     <Router>
       <Routes>
@@ -31,6 +35,7 @@ function App() {
               counters={counters}
               setCounter={setCounter}
               setHub={setHub}
+              setLogedAdmin={setLogedAdmin}
             />
           }
         >
@@ -56,7 +61,6 @@ function App() {
               />
             }
           />
-
           <Route
             path="/product/:slugSku"
             element={
@@ -67,15 +71,16 @@ function App() {
               />
             }
           />
-
           <Route
             path="/cart"
             element={<Cart counter={counters} setCounter={setCounter} />}
           />
-
+          <Route path="/checkout" element={<Checkout counter={counters} />} />
           <Route
-            path="/checkout"
-            element={<Checkout counter={counters} />}
+            path="/backoffice"
+            element={
+              <BackOffice logedAdmin={logedAdmin} setLogedAdmin={setLogedAdmin} />
+            }
           />
         </Route>
         <Route path="/" element={<Home />} />

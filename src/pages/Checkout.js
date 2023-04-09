@@ -6,10 +6,12 @@ import Loader from "../components/Loader";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import { Link } from "react-router-dom";
 
 const Checkout = ({ counter }) => {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
-  console.log(process.env.REACT_APP_STRIPE_KEY);
   const today = new Date();
   const day = today.toLocaleDateString("en-GB", { day: "2-digit" });
   const month = today.toLocaleDateString("en-GB", { month: "2-digit" });
@@ -19,7 +21,6 @@ const Checkout = ({ counter }) => {
   // eslint-disable-next-line
   const [order, setOrder] = useState([]);
   // eslint-disable-next-line
-  const [paymentState, setPaymentState] = useState(false);
 
   const navigate = useNavigate();
   let numTotal = Object.keys(counter).length - 1;
@@ -70,13 +71,69 @@ const Checkout = ({ counter }) => {
         >
           {"< Retour"}
         </p>
+        <div>
+          <h3 className="my-2 font-weight-bold">
+            Vos articles {`(${Object.keys(counter).length - 1})`}
+          </h3>
+
+          {order.map((product) => {
+            return (
+              <div
+                key={product._id}
+                className="w-50 primary d-flex justify-content-between align-items-center"
+              >
+                <Link
+                  to={`/product/${product.slug}-${product.sku}`}
+                  state={{
+                    setHub: "setHub",
+                    counters: "counters",
+                    setCounter: "setCounter",
+                  }}
+                >
+                  <img
+                    className="imageProductSearch"
+                    src={product?.thumbnail}
+                    alt={product?.name}
+                  ></img>
+                </Link>
+                <div className="w-75">
+                  {product?.name.length > 24 ? (
+                    <OverlayTrigger
+                      overlay={
+                        <Tooltip id="tooltip-disabled">
+                          {product?.name.split(" ").slice(4).join(" ")}
+                        </Tooltip>
+                      }
+                    >
+                      <p className="text-center text-wrap mb-0">
+                        {product?.name.split(" ").slice(0, 4).join(" ")} ...
+                      </p>
+                    </OverlayTrigger>
+                  ) : (
+                    <p className="text-center text-wrap mb-0">
+                      {product?.name}...
+                    </p>
+                  )}
+
+                  <p className="text-center font-weight-bold">
+                    {new Intl.NumberFormat("de-DE", {
+                      style: "currency",
+                      currency: "EUR",
+                    }).format(product?.price?.amount)}
+                  </p>
+                </div>
+
+                <div>{counter[product.sku].count}</div>
+              </div>
+            );
+          })}
+        </div>
         <div className="d-flex justify-content-between">
           <div>
             <h3 className="my-2 font-weight-bold">Caisse</h3>
 
             <Elements stripe={stripePromise}>
               <CheckoutForm
-                setPaymentState={setPaymentState}
                 counter={counter}
                 currentDate={currentDate}
               />

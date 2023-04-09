@@ -10,8 +10,9 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
+import Cookies from "js-cookie";
 
-const Header = ({ counters, setCounter, setHub }) => {
+const Header = ({ counters, setCounter, setHub, setLogedAdmin }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [basket, setBasket] = useState([]);
@@ -231,9 +232,25 @@ const Header = ({ counters, setCounter, setHub }) => {
           </Nav>
           <Nav>
             <Nav.Link>
-              <Button variant="secondary btn-lg" size="lg">
-                Admin
-              </Button>
+              <Link to="/backoffice">
+                {Cookies.get("logedAdmin") &&
+                window.location.href.includes("backoffice") ? (
+                  <Button
+                    variant="secondary btn-lg"
+                    size="lg"
+                    onClick={() => {
+                      setLogedAdmin(false);
+                      Cookies.remove("logedAdmin");
+                    }}
+                  >
+                    Se deconnecter
+                  </Button>
+                ) : (
+                  <Button variant="secondary btn-lg" size="lg">
+                    Admin
+                  </Button>
+                )}
+              </Link>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

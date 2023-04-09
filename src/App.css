@@ -57,3 +57,13 @@
 .sticky-side-nav::-webkit-scrollbar {
   display: none;
 }
+
+.borderPink {
+  border: 2px solid #ef7ab0;
+  padding: 1rem;
+}
+
+.orders tr:hover{
+  background-color: lightslategray;
+  cursor: pointer;
+}
