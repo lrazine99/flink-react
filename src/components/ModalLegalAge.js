@@ -1,5 +1,5 @@
 
-import { Modal, Image } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import Button from "react-bootstrap/Button";
 

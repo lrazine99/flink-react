@@ -38,6 +38,7 @@ const Header = ({ counters, setCounter, setHub }) => {
 
       fetchProducts();
     }
+    // eslint-disable-next-line
   }, [counters]);
 
   const handleCloseDropdown = () => {

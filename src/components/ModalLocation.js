@@ -79,7 +79,7 @@ const ModalLocation = ({ show, handleClose, setHub }) => {
       </Modal.Header>
       <Modal.Body onClick={(event) => event.stopPropagation()}>
         <div className="d-flex justify-content-around">
-          <img src={riders} className="riders"></img>
+          <img src={riders} className="riders" alt="riders"></img>
           <div className="px-2">
             <p>
               Veuillez ajouter votre adresse exacte pour voir les produits qui

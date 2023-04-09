@@ -11,7 +11,7 @@ const Search = ({ setCounter, counters, hub, setHub }) => {
   const product = useRef([]);
   const urlParams = new URLSearchParams(window.location.search);
   const search = urlParams.get("q");
-  console.log(search);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,7 +34,9 @@ const Search = ({ setCounter, counters, hub, setHub }) => {
     };
 
     fetchData();
+    // eslint-disable-next-line
   }, []);
+  
   return isLoading ? (
     <Loader></Loader>
   ) : (

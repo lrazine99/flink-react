@@ -32,6 +32,7 @@ const Product = ({ counters, setCounter, setHub }) => {
       }
     };
     fetchProduct();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -59,14 +60,14 @@ const Product = ({ counters, setCounter, setHub }) => {
                   <img
                     src={image}
                     className="d-block w-100"
-                    alt={`${product.name}-image${key}`}
+                    alt={`${product.name}-${key}`}
                   />
                 </Carousel.Item>
               );
             })}
           </Carousel>
         ) : (
-          <img src={product.thumbnail} alt={`${product.name}-image`} />
+          <img src={product.thumbnail} alt={`${product.name}`} />
         )}
 
         <div className="px-3">
@@ -91,8 +92,7 @@ const Product = ({ counters, setCounter, setHub }) => {
       </div>
       {product?.description && (
         <div className="mt-3">
-          <pre style={{ "whiteSpace": "pre-wrap" }} >
-
+          <pre style={{ whiteSpace: "pre-wrap" }}>
             <p className="font-weight-bold">Description</p>
             <hr></hr>
             <p>{product?.description.replaceAll("#", "")}</p>

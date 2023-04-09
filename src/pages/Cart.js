@@ -40,6 +40,7 @@ const Cart = ({ setCounter, counter }) => {
 
       fetchProducts();
     }
+    // eslint-disable-next-line
   }, [counter]);
 
   return isLoading ? (
