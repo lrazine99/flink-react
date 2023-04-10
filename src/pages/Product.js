@@ -5,10 +5,12 @@ import Breadcrumb from "react-bootstrap/Breadcrumb";
 import Counter from "../components/Counter";
 import { Link } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
+import Loader from "../components/Loader";
 
 const Product = ({ counters, setCounter, setHub }) => {
   const [product, setProduct] = useState({});
   const [index, setIndex] = useState(0);
+  const [loading, setIsLoading] = useState(true);
   const handleSelect = (selectedIndex) => setIndex(selectedIndex);
 
   const productSku = window.location.href
@@ -22,6 +24,7 @@ const Product = ({ counters, setCounter, setHub }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setIsLoading(true);
         const {
           data: { message },
         } = await axios.get(
@@ -29,6 +32,7 @@ const Product = ({ counters, setCounter, setHub }) => {
         );
 
         setProduct(message);
+        setIsLoading(false);
       } catch (error) {
         errorToast();
       }
@@ -37,7 +41,9 @@ const Product = ({ counters, setCounter, setHub }) => {
     // eslint-disable-next-line
   }, []);
 
-  return (
+  return loading ? (
+    <Loader></Loader>
+  ) : (
     <div className="p-4">
       <Breadcrumb separator=">">
         <Breadcrumb.Item active>
