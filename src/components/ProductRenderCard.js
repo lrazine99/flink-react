@@ -4,8 +4,9 @@ import Counter from "./Counter.js"
 const ProductRenderCard = ({product, setHub, setCounter, counters}) => {
   return (
     <div
-      className="bg-light shadow-sm rounded m-2 mw-50  border justify-content-center d-flex flex-column p-2 flex-grow-1
+      className="bg-light shadow-sm rounded m-2 border justify-content-center d-flex flex-column p-2 flex-grow-0
       align-items-center"
+      style={{'width' : "150px" }}
     >
       <div className="text-decoration-none text-dark">
         <p className="text-center text-wrap mb-0">{product?.name}</p>

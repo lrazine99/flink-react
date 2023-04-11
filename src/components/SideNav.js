@@ -4,6 +4,7 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import ModalLocation from "./ModalLocation";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const SideNav = ({
   pageSearch,
@@ -12,11 +13,14 @@ const SideNav = ({
   hub,
   setHub,
   defaultActivated,
+  categoriesDisplay,
 }) => {
   const [showModalLocation, setShowModalLocation] = useState(false);
   const navigate = useNavigate();
 
-  return (
+  return !categories.length ? (
+    <Loader></Loader>
+  ) : (
     <div className="sticky-side-nav m-2">
       <div className="mt-4">
         <Card border="white" className="shadow" body>
@@ -72,13 +76,20 @@ const SideNav = ({
               <Accordion.Item eventKey={key} key={item._id}>
                 <Accordion.Header
                   className="user-select-none"
-                  onClick={() => {
+                  onClick={(event) => {
                     const childrenCategories = categories.filter(
                       (element) => element?.parent_id === item._id
                     );
 
                     if (!pageSearch) {
-                      setCategoriesDisplay(childrenCategories);
+                      if (
+                        JSON.stringify(categoriesDisplay) !==
+                        JSON.stringify(childrenCategories)
+                      ) {
+                        setCategoriesDisplay(childrenCategories);
+                      }
+
+                      event.target.offsetParent.scrollTop = event.target.offsetTop;
                     } else {
                       navigate("/products", {
                         state: {
