@@ -11,10 +11,10 @@ const Home = () => {
       <div classNam="" style={{ height: "85%", backgroundColor: "#ef7ab0" }}>
         <div className="h-100 d-flex justify-content-between  ">
           <div className="align-self-center m-4">
-          <div className="border border-primary ">
+          <div>
               <img className="image-fluid w-100" src={logo} alt="map"></img>
             </div>
-            <div className="border border-danger my-4 ">
+            <div className="my-4 ">
               <Link to="/products">
                 <Button>{`Acheter maintenant ->`}</Button>
               </Link>
@@ -23,7 +23,7 @@ const Home = () => {
           </div>
 
           <div
-            className="border border-primary  align-self-end"
+            className="align-self-end"
             style={{ "max-height": "85vh" }}
           >
             <img
